@@ -1,0 +1,30 @@
+#a1 has address and a2 has size
+#a0 has the maximum
+main:
+	addi a1, x0, 200
+	addi t6, x0, 14
+	sw t6, 0(a1)
+	addi t6, x0, 21
+	sw t6, 4(a1)
+	addi t6, x0, -5
+	sw t6, 8(a1)
+	addi t6, x0, 7
+	sw t6, 12(a1)
+	addi a2, x0, 4
+	
+	jal ra, MAX
+	ecall
+
+MAX: 
+	lw a0, 0(a1)
+	addi t1, x0, 0 #i = 0
+	Loop:
+		slli t2, t1, 2
+		add t2, t2, a1
+		lw t2, 0(t2)
+		bge a0, t2, skip
+		addi a0, t2, 0
+		skip:
+			addi t1, t1, 1
+			blt t1, a2, Loop
+	jalr x0, 0(ra)

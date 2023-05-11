@@ -1,0 +1,29 @@
+#array base addres in a0 and low in a1 and high in a2 
+main: 
+       addi a0, zero, 200
+       addi a1, zero, 0
+       addi a2, zero, 4
+       jal ra, reverseArray 
+       beq zero, zero, exit 
+       
+reverseArray: 
+
+     while:
+            bge a1, a2, return 
+            slli t1, a1, 2 
+            add t1, a0, t1
+            lw t3, 0(t1)  # t3 = arr[start]
+            addi t0, t3, 0 # temp = arr[start]
+            slli t2, a2, 2 # slli end 
+            add t2, t2, a0 # address 
+            lw t4, 0(t2) # t4 = arr[end] 
+            sw t4, 0(t1)
+            sw t0, 0(t2)
+            addi a1, a1, 1
+            addi a2, a2, -1
+            beq zero, zero, while
+     return: 
+            jalr zero, 0(ra)
+            
+     
+     exit:

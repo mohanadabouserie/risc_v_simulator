@@ -1,0 +1,35 @@
+#value passed to function is in a1 and the return value is in a1 as well
+main:
+    addi a1, x0, 12
+    jal ra, fib
+    ecall
+
+fib:
+    addi sp, sp, -12
+    sw ra, 0(sp)
+    sw a1, 4(sp)
+
+    addi t0, x0, 1
+    bge t0, a1, return_n
+
+    addi a1, a1, -1
+    jal ra, fib
+    sw a1, 8(sp)
+
+    lw a1, 4(sp)
+    addi a1, a1, -2
+    jal ra, fib
+
+    lw t1, 8(sp)
+    add a1, a1, t1
+
+    beq x0, x0, return
+
+    return_n:
+    lw a1, 4(sp) 
+    beq x0, x0, return
+
+    return:
+        lw ra, 0(sp)
+        addi sp, sp, 12
+        jalr x0, 0(ra)

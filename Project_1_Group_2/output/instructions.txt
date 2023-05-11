@@ -1,0 +1,52 @@
+main:
+auipc a0, 9
+lui a0, 9
+addi a1, a0, 4
+add a2, a0, zero
+jal ra, instructions 
+fence
+
+instructions: 
+beq a0, a1, return 
+bne a0, a1, contniue 
+ecall
+
+contniue:
+addi t1, zero, 50
+slli t1, t1, 2
+addi t2, zero, 2
+sb t2, 0(t1) 
+sh a0, 0(t1)
+sw a0, 0(t1)
+lb t3, 0(t1)
+lh t4, 0(t1)
+lw t5, 0(t1)
+lbu t6, 0(t1)
+lhu t1, 0(t1)
+bge a2, a1, return
+blt a1, a2, return
+bgeu a2, a1, return
+bltu a1, a2, return
+sltiu t1, a2, -100 # expected result of t1 1
+xori t3, t1, 3 #expected result of t3 2
+ori t3, t3, 5 # expected value of t3 7
+andi t3, t3, 5 # expected value of t3 5
+srli t3, t3, 1 # expeced value of t3 2
+addi t3, t3, 40 # expected value of t3 42
+srai t3, t3, 2 # expected value of t3 10
+addi t2, zero, 3 # expected value of t2 3
+sub t3, t3, t2  # expected value of t3 7
+sll t3, t3, t3 # 896
+slt t5, t3, t3 # t5 is zero
+addi t4, zero, 6 #expected value of t4 6
+sltu t5, t4, t3 # expected value of t5 is 1
+xor t5, t5, t4  # expeced value of t5 is 7
+slli t5, t5, 4 # expected value of t5 is 112
+srl t5, t5, t2 # expected value of t5 is 15
+sra t5, t5, t2 # expected value of t5 is 1
+or t5, t5, t2 # expected value is 3
+and t5, t5, t4 # expected value is 2
+ebreak
+
+return: 
+jalr zero, 0(ra)

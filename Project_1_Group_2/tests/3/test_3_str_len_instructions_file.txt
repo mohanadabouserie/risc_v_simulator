@@ -1,0 +1,22 @@
+#assumptions: 1)the base address of the array passed to the function is stored in a0 2)the return value is stored in a1 
+
+main:
+	addi a0, x0, 200
+	jal ra, strlen
+	ecall
+
+strlen:
+	addi sp, sp, -4
+	sw s0, 0(sp)
+	addi s0, a0, 0 #i = base address of the array
+	addi a1, x0, 0 #len = 0
+	Loop:
+		lbu t2, 0(s0)        #t2 is the value of str[i]
+		beq t2, x0, return
+		addi s0, s0, 1
+		addi a1, a1, 1
+		beq x0, x0, Loop
+	return:
+	lw s0, 0(sp)
+	addi sp, sp, 4
+	jalr x0, 0(ra)

@@ -1,0 +1,52 @@
+#assumptions: 1)a2 is array base address, a3 is value, a4 is low, and a5 is high 2)the return value is stored in a1 and it stores the index of the element if found and store -1 if not found
+main:	
+	addi a2, x0, 200
+	addi a3, x0, 3
+	addi a5, x0, 5
+	jal ra, BinarySearch
+	ecall
+
+BinarySearch:
+	addi sp, sp, -4
+	sw ra, 0(sp)
+	blt a5, a4, return_not_found #if(high < low)
+
+	#t0(mid) = (low+high)/2
+	add t0, a4, a5
+	srli t0, t0, 1
+
+	slli t1, t0, 2 #t1 = mid*4
+	add t2, a2, t1 #t2 = address of SortedArray[mid]
+	lw t2, 0(t2) #t2 = SortedArray[mid]
+
+	blt a3, t2, return_left #if (SortedArray [mid] > value)
+	blt t2, a3, return_right #else if (SortedArray [mid] < value)
+
+	beq x0, x0, return_mid #else
+	
+	return_left:
+	#return BinarySearch(SortedArray, value, low, mid-1)
+		addi a5, t0, -1
+		jal ra, BinarySearch
+		beq x0, x0, return
+	
+	return_right:
+	#return BinarySearch(SortedArray, value, mid+1, high)
+		addi a4, t0, 1
+		jal ra, BinarySearch
+		beq x0, x0, return
+	
+	return_mid:
+	#return mid
+		add a1, x0, t0
+		beq x0, x0, return
+	
+	return_not_found:
+	#return not_found
+		addi a1, x0, -1
+		beq x0, x0, return
+	
+	return:
+		lw ra, 0(sp)
+		addi sp, sp, 4
+		jalr x0, 0(ra)
