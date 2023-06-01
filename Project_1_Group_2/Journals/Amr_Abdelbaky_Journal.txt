@@ -1,9 +1,0 @@
-May 02, 8:46PM : Created the execute functon which takes and struct as a parameter and excecutes the given instruction.
-May 02, 8:46PM : added support in the execute function for the following instructions :  addi , slti , sltiu , xori , ori , andi , slli , 
-srli , srai , add , sub , sll , slt , sltu , xor , srl , sra , or , and , fence , ecall , ebreak instructions, a total of 22 instructions can be used now. 
-May 03, 4:32PM : created the rars_format function which outputs the registers data as the rars simualtor , 
-added with bonus part 3 outputting the data in decimal,hexadecimal and binary . 
-May 04, 5:32PM : added support for AUIPC , LUI in the execute instruction .
-May 09, 9:00PM : Created the stack_pointer map and added support for the stack pointer it in the following isntructions : addi , sw , sh , sb , lw , lh , lb , lbu , lhu.
-May 10, 8:30PM : Gathered the 6 meaningful C++ prgorams codes and their coressponding rars equivelnt codes with the data files that work with them respectively,
-salso created the rars code that supports all 40 instructions to be tested .
