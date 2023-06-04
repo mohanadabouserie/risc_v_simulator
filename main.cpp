@@ -1053,7 +1053,7 @@ void execute(instruction inst)  // to call the function of an insturction based 
         {
             return;
         }
-        registers[inst.rd] = registers[inst.rs1] >> inst.imm;
+        registers[inst.rd] = (unsigned int )registers[inst.rs1] >> inst.imm;
     }
     if (inst.name == "srai") // 27
     {   if( inst.rd== 0)
@@ -1127,7 +1127,7 @@ void execute(instruction inst)  // to call the function of an insturction based 
         {
             return ;
         }
-        registers[inst.rd] = registers[inst.rs1] >> registers[inst.rs2];
+        registers[inst.rd] = (unsigned int )registers[inst.rs1] >> registers[inst.rs2];
     }
     if (inst.name == "sra") //35
     {
